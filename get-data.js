@@ -50,4 +50,4 @@ const addTour = async () => {
 };
 if (process.argv[2] == '--import') addTour();
 else if (process.argv[2] == '--delete') deletour();
-console.log(process.argv);
+//console.log(process.argv);

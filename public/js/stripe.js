@@ -7,7 +7,7 @@ export const pay_it = async (tourid) => {
   try {
     const ot = await axios({
       method: 'GET',
-      url: `http://127.0.0.1:3000/api/v1/booking/checkout/${tourid}`,
+      url: `/api/v1/booking/checkout/${tourid}`,
     });
     console.log(ot);
     location.assign(`${ot.data.session.url}`);

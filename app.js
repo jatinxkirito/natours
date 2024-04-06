@@ -14,6 +14,7 @@ const sanitize = require('express-mongo-sanitize');
 const hpp = require('hpp');
 const cln = require('xss-clean');
 const ErrorController = require(`./controllers/errorController`);
+const compression = require('compression');
 const app = express();
 const cookieParser = require('cookie-parser');
 
@@ -40,6 +41,7 @@ exports.checkId = (req, res, next, val) => {
     });
   next();
 };
+app.use(compression());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 app.use(sanitize());

@@ -5,7 +5,7 @@ export const login = async (email, password) => {
     // console.log(email, password);
     const res = await axios({
       method: 'POST',
-      url: 'http://127.0.0.1:3000/api/v1/users/login',
+      url: '/api/v1/users/login',
       data: {
         email,
         password,
@@ -27,7 +27,7 @@ export const update = async (data) => {
     // console.log(name, email, photo);
     const res = await axios({
       method: 'PATCH',
-      url: 'http://127.0.0.1:3000/api/v1/users/update_content',
+      url: '/api/v1/users/update_content',
       data,
     });
     //console.log('sdk');
@@ -48,7 +48,7 @@ export const update_password = async (obj) => {
     // console.log(email, password);
     const res = await axios({
       method: 'PATCH',
-      url: 'http://127.0.0.1:3000/api/v1/users/changepassword',
+      url: '/api/v1/users/changepassword',
       data: obj,
     });
     //console.log('sdk');
@@ -69,7 +69,7 @@ export const logout = async () => {
     // console.log(email, password);
     const res = await axios({
       method: 'GET',
-      url: 'http://127.0.0.1:3000/api/v1/users/logout',
+      url: '/api/v1/users/logout',
     });
     const x = res.data.status;
     //console.log(x);

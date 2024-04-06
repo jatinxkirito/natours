@@ -42,7 +42,7 @@ const deleteUser = async (req, res, next) => {
   const user = await User.findById(req.user.id).select('+password');
   if (!user.ps(user.password, req.body.password))
     return next(new AppError('Invalid password', 403));
-  console.log(await User.findByIdAndDelete(user.id));
+  // console.log(await User.findByIdAndDelete(user.id));
   return res.status(200).json({ status: 'success', token: undefined });
 };
 const resize_image = async (req, res, next) => {
@@ -56,7 +56,7 @@ const resize_image = async (req, res, next) => {
   next();
 };
 const update_content = async (req, res, next) => {
-  console.log(req.file);
+  // console.log(req.file);
   if (req.body.password || req.body.confirmPassword)
     return next(
       new AppError(

@@ -56,7 +56,7 @@ const resize_image = async (req, res, next) => {
 const getMonthlyplan = async (req, res) => {
   try {
     const year = req.query.year * 1;
-    console.log(year);
+    //console.log(year);
     const rep = await Tour.aggregate([
       {
         // suppose we have a feature as an array this is used to unwrap that feature and each item will be made into seperate object
@@ -177,7 +177,7 @@ PackageRouter.get('/', getall);
 // });
 
 PackageRouter.get('/:id/:dt?', async (req, res, next) => {
-  console.log(req.params);
+  //console.log(req.params);
 
   try {
     let tour = await Tour.findOne({ _id: req.params.id }).populate('reviews');
@@ -212,7 +212,7 @@ PackageRouter.route('/:id/:dt?').patch(
   ]),
   resize_image,
   async (req, res) => {
-    console.log(req.params);
+    //console.log(req.params);
 
     try {
       let tour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
@@ -232,11 +232,11 @@ PackageRouter.route('/:id/:dt?').delete(
   authc.protect,
   authc.authorize('admin', 'lead'),
   async (req, res) => {
-    console.log(req.params);
+    //console.log(req.params);
 
     try {
       let tour = await Tour.findByIdAndDelete(req.params.id);
-      console.log(tour);
+      // console.log(tour);
       return res.status(204).json({ status: 'success', body: null });
     } catch (err) {
       return res.status(404).json({

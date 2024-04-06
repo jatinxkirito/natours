@@ -38,11 +38,11 @@ ReviewRouter.route(`/:id`)
     }
   })
   .delete(authc.protect, authc.authorize('admin', 'user'), async (req, res) => {
-    console.log(req.params);
+    // console.log(req.params);
 
     try {
       let tour = await Review.findByIdAndDelete(req.params.id);
-      console.log(tour);
+      //  console.log(tour);
       return res.status(204).json({ status: 'success', body: null });
     } catch (err) {
       return res.status(404).json({
