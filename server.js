@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 // });
 const Tour = require('./models/tourModel');
 dotenv.config({ path: './config.env' });
-const { app } = require('./app');
+const app = require('./app');
 mongoose
   .connect(process.env.DATABASE, {
     useNewUrlParser: true,
