@@ -1,0 +1,1 @@
+const data = JSON.parse(fs.readFileSync('./dev-data/data/tours-simple.json'));

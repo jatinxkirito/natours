@@ -1,0 +1,15 @@
+extends base
+block content 
+        p Hi #{firstName},
+        p Forgot your password? Send a patch request with new password and confirm password on web
+        table.btn.btn-primary(role='presentation', border='0', cellpadding='0', cellspacing='0')
+            tbody
+                tr
+                    td(align='left')
+                        table(role='presentation', border='0', cellpadding='0', cellspacing='0')
+                            tbody
+                                tr
+                                    td
+                                        a(href=`${url}`, target='_blank') reset password
+        p If you didn't forgot you password, please ignore this email!
+        

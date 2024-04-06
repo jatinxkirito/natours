@@ -1,0 +1,32 @@
+doctype html 
+html 
+    head 
+     block head
+        meta(charset="UTF-8")
+        //- meta(name="viewport" content="width=device-width, initial-scale=1.0")
+        //- meta(http-equiv="Content-Security-Policy" content="script-src 'self' https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js")
+
+        link(rel="stylesheet" href=`/css/style.css`)
+        link(rel="shortcut icon" href='/img/favicon.png')
+        link(href="https://fonts.googleapis.com/css?family=Lato:300,300i,700" rel="stylesheet")
+        script(src="https://js.stripe.com/v3/")
+        
+      
+        Title Natours | #{title}
+    
+
+    body 
+        include _header
+
+        block content    
+            section.overview
+                //- h1=tour 
+                //- p=user.toUpperCase()
+                - h=4
+                h2=2*h
+        
+        include _footer
+        //- script(src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.8/axios.min.js" integrity="sha512-PJa3oQSLWRB7wHZ7GQ/g+qyv6r4mbuhmiDb8BjSFZ8NZ2a42oTtAq5n0ucWAwcQDlikAtkub+tPVCw4np27WCg==" crossorigin="anonymous" referrerpolicy="no-referrer")
+        //- script(src=`/js/mapbox.js`)
+        script(src='/js/bundle.js')
+        
