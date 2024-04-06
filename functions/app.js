@@ -1,23 +1,24 @@
 require('express-async-errors');
 const express = require('express');
 const path = require('path');
-const AppError = require('./utils/appError');
+const AppError = require('../utils/appError');
 const helmet = require('helmet');
 const morgan = require('morgan');
+const serverless = require('serverless-http');
 const rateLimit = require('express-rate-limit');
-const { PackageRouter } = require('./routes/tourRoutes');
-const { UserRouter } = require('./routes/userRoutes');
-const ReviewRouter = require('./routes/reviewRoutes');
-const viewRouter = require('./routes/viewRoutes');
-const bookingRouter = require('./routes/bookingRoute');
+const { PackageRouter } = require('../routes/tourRoutes');
+const { UserRouter } = require('../routes/userRoutes');
+const ReviewRouter = require('../routes/reviewRoutes');
+const viewRouter = require('../routes/viewRoutes');
+const bookingRouter = require('../routes/bookingRoute');
 const sanitize = require('express-mongo-sanitize');
 const hpp = require('hpp');
 const cln = require('xss-clean');
-const ErrorController = require(`./controllers/errorController`);
+const ErrorController = require(`../controllers/errorController`);
 const compression = require('compression');
 const app = express();
 const cookieParser = require('cookie-parser');
-
+// app.use('/.netlify/functions/app', router);
 app.use(express.json()); // express.json ek middleware hai jo shape deta hai hamare data ko
 app.use(cookieParser());
 if (process.env.NODE_ENV !== 'production') app.use(morgan('dev'));
@@ -87,4 +88,4 @@ app.all(`*`, (req, res, next) => {
 });
 app.use(ErrorController);
 
-module.exports = { app };
+module.exports.handler = serverlessHandler(app);
