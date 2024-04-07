@@ -50,10 +50,12 @@ exports.generateCheckout = async (req, res, next) => {
 const createBooking = async (session) => {
   //const { tour, user, price } = req.query;
   const tour = session.client_reference_id;
-  const user = await User.findOne({ email: session.customer_email }).id;
+  const user = await User.findOne({ email: session.customer_email });
   const price = session.amount_total / 100;
+  console.log(user);
+  const x = user.id;
   //if (!tour || !user || !price) return next();
-  await Booking.create({ tour, user, price });
+  await Booking.create({ tour, x, price });
   // res.redirect(req.originalUrl.split('?')[0]);
   // next();
 };
