@@ -55,6 +55,7 @@ const createBooking = async (session) => {
   //console.log(user);
   //const x = user._id;
   //if (!tour || !user || !price) return next();
+  console.log(user);
   await Booking.create({ tour, user, price });
   // res.redirect(req.originalUrl.split('?')[0]);
   // next();
