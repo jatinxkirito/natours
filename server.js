@@ -21,7 +21,7 @@ mongoose
   .catch((error) => {
     console.log(error);
   });
-const port = 3000;
+const port = process.env.PORT || 3000;
 // process.on('unhandledRejection', (err) => {
 //   console.log(err);
 //   console.log('Shutting down...');
