@@ -4,7 +4,7 @@ const controller = require('./../controllers/viewController');
 const booking = require('./../controllers/bookingController');
 const authc = require('./../controllers/authController');
 router.use(authc.isLoggedin);
-router.route('/').get(booking.createBooking, controller.overview);
+router.route('/').get(controller.overview);
 router.route('/me').get(controller.me);
 router.route('/my_tours').get(booking.myBookings);
 router.route('/login').get(controller.login);
