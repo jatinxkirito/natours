@@ -16,10 +16,16 @@ const sanitize = require('express-mongo-sanitize');
 const hpp = require('hpp');
 const cln = require('xss-clean');
 const ErrorController = require(`./controllers/errorController`);
+const bookingController = require(`./controllers/bookingController`);
 const compression = require('compression');
 const app = express();
 const cookieParser = require('cookie-parser');
 // app.use('/.netlify/functions/app', router);
+app.use(
+  '/web_checkout',
+  express.raw({ type: 'application/json' }),
+  bookingController.checkout_hook,
+);
 app.use(express.json()); // express.json ek middleware hai jo shape deta hai hamare data ko
 app.use(cookieParser());
 if (process.env.NODE_ENV !== 'production') app.use(morgan('dev'));

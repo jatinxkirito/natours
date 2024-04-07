@@ -1,15 +1,14 @@
 const AppError = require('./../utils/appError.js');
 const Tour = require('./../models/tourModel.js');
 const Booking = require('./../models/bookingModel.js');
+const User = require('./../models/userModel.js');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 exports.generateCheckout = async (req, res, next) => {
   const tour = await Tour.findById(req.params.tourid);
   // generating checkout session
   const session = await stripe.checkout.sessions.create({
     mode: 'payment',
-    success_url: `${req.protocol}://${req.get('host')}/?tour=${tour.id}&user=${
-      req.user.id
-    }&price=${tour.price}`,
+    success_url: `${req.protocol}://${req.get('host')}/my_tours`,
     cancel_url: `${req.protocol}://${req.get('host')}/tour/${tour.slug}`,
     payment_method_types: ['card'],
     client_reference_id: req.params.tourid,
@@ -48,16 +47,31 @@ exports.generateCheckout = async (req, res, next) => {
     session,
   });
 };
-exports.createBooking = async (req, res, next) => {
+const createBooking = async (session) => {
+  //const { tour, user, price } = req.query;
+  const tour = session.client_reference_id;
+  const user = await User.findOne({ email: session.customer_email }).id;
+  const price = session.line_items[0].price_data.unit_amount / 100;
+  if (!tour || !user || !price) return next();
+  await Booking.create({ tour, user, price });
+  // res.redirect(req.originalUrl.split('?')[0]);
+  // next();
+};
+exports.checkout_hook = (req, res, next) => {
+  const signature = req.headers['stripe-signature'];
+  let event;
   try {
-    const { tour, user, price } = req.query;
-    if (!tour || !user || !price) return next();
-    await Booking.create({ tour, user, price });
-    res.redirect(req.originalUrl.split('?')[0]);
-    next();
+    event = stripe.webhooks.constructEvent(
+      req.body,
+      signature,
+      process.env.STRIPE_CHECKOUT_KEY,
+    );
   } catch (err) {
-    return next(new AppError(err, 500));
+    return res.status(400).send(err);
   }
+  if (event.type == 'checkout.session.completed')
+    createBooking(event.data.object);
+  res.status(200).send('success');
 };
 exports.myBookings = async (req, res, next) => {
   try {
