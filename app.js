@@ -2,6 +2,7 @@ require('express-async-errors');
 const express = require('express');
 const path = require('path');
 const AppError = require('./utils/appError');
+const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const serverless = require('serverless-http');
@@ -25,7 +26,10 @@ if (process.env.NODE_ENV !== 'production') app.use(morgan('dev'));
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(`${__dirname}/public`)); // for loading static files
-
+// cors is used for cross origin requests
+app.use(cors());
+// Now cors normally will work for reques like get but for delete and patch requests we will have to use options
+app.options('*', cors());
 exports.checkId = (req, res, next, val) => {
   let id = val;
   id = id * 1;
